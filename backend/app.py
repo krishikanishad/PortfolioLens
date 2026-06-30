@@ -13,20 +13,23 @@ def analyze():
     try:
         data = request.get_json()
         tickers = data['tickers']
-        weights = np.array(data['weights'], dtype=float)
-        weights = weights / weights.sum()
+        raw_weights = np.array(data['weights'], dtype=float)
 
-       prices = yf.download(tickers, period='3y', auto_adjust=True, progress=False)['Close']
+        prices = yf.download(tickers, period='3y', auto_adjust=True, progress=False)['Close']
         if len(tickers) == 1:
             prices = prices.to_frame(name=tickers[0])
         prices = prices.dropna(axis=1, how='all').dropna()
 
         valid_tickers = list(prices.columns)
+        invalid_tickers = [t for t in tickers if t not in valid_tickers]
+
+        if invalid_tickers:
+            return jsonify({'error': f"Could not find data for: {', '.join(invalid_tickers)}. Please remove and re-search using the search bar."}), 400
+
         if len(valid_tickers) < 2:
             return jsonify({'error': 'Could not fetch data for enough tickers. Check ticker symbols.'}), 400
 
-        # Match weights to valid_tickers using original ticker order, not column order
-        ticker_to_weight = dict(zip(tickers, weights))
+        ticker_to_weight = dict(zip(tickers, raw_weights))
         weights = np.array([ticker_to_weight[t] for t in valid_tickers])
         weights = weights / weights.sum()
 
@@ -83,7 +86,7 @@ def analyze():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-import requests
+
 
 @app.route('/search', methods=['GET'])
 def search_ticker():
@@ -106,7 +109,8 @@ def search_ticker():
         return jsonify(results)
     except:
         return jsonify([])
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-
     
