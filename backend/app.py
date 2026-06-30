@@ -16,7 +16,7 @@ def analyze():
         weights = np.array(data['weights'], dtype=float)
         weights = weights / weights.sum()
 
-        prices = yf.download(tickers, period='3y', auto_adjust=True, progress=False)['Close']
+       prices = yf.download(tickers, period='3y', auto_adjust=True, progress=False)['Close']
         if len(tickers) == 1:
             prices = prices.to_frame(name=tickers[0])
         prices = prices.dropna(axis=1, how='all').dropna()
@@ -25,7 +25,9 @@ def analyze():
         if len(valid_tickers) < 2:
             return jsonify({'error': 'Could not fetch data for enough tickers. Check ticker symbols.'}), 400
 
-        weights = weights[:len(valid_tickers)]
+        # Match weights to valid_tickers using original ticker order, not column order
+        ticker_to_weight = dict(zip(tickers, weights))
+        weights = np.array([ticker_to_weight[t] for t in valid_tickers])
         weights = weights / weights.sum()
 
         returns = prices.pct_change().dropna()
