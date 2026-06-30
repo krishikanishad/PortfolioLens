@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { PieChart, Pie, Cell, ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 
-const API = "http://127.0.0.1:5000";
+const API = "https://portfoliolens-backend.onrender.com";
 const COLORS = ["#2563eb", "#16a34a", "#7c3aed", "#d97706", "#dc2626", "#0891b2"];
 
 function TickerSearch({ onAdd }) {
