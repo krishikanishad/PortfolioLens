@@ -8,7 +8,7 @@ A full-stack portfolio risk and return analyzer for Indian equities. Enter any c
 
 ## Overview
 
-PortfolioLens applies standard empirical asset pricing methodology — the same framework used in academic portfolio theory — to give retail-style users an institutional view of their holdings. Built as an extension of ongoing research in empirical finance on Indian equity markets, the tool computes:
+PortfolioLens applies standard empirical asset pricing methodology, the same framework used in academic portfolio theory, to give retail-style users an institutional view of their holdings. Built as an extension of ongoing research in empirical finance on Indian equity markets, the tool computes:
 
 - **Expected return** - annualized, weighted by holding
 - **Volatility (σ)** - annualized standard deviation using the full covariance matrix
@@ -36,12 +36,12 @@ PortfolioLens applies standard empirical asset pricing methodology — the same 
 
 ```
 portfoliolens/
-├── frontend/          React app — UI, charts, ticker search
+├── frontend/          React app - UI, charts, ticker search
 │   └── src/App.js
-├── backend/           Flask API — portfolio calculations
+├── backend/           Flask API - portfolio calculations
 │   └── app.py
-│       /analyze       POST — computes risk/return metrics for a portfolio
-│       /search        GET  — autocomplete stock search
+│       /analyze       POST - computes risk/return metrics for a portfolio
+│       /search        GET  - autocomplete stock search
 ```
 
 ## Methodology
@@ -70,4 +70,4 @@ The backend runs on `localhost:5000`, frontend on `localhost:3000`.
 
 ## Author
 
-Krishika Nishad — B.A. (Hons.) Economics, Hansraj College, University of Delhi
+Krishika Nishad - B.A. (Hons.) Economics, Hansraj College, University of Delhi
